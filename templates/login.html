@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %} Log in {% endblock %}
+
+{% block main %}
+    <div class="container-sm py-5 text-center w-25">
+        <form action="/login" method="post">
+            <div class="mb-5">
+                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-5">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1">
+            </div>
+            <button type="submit" class="btn" data-bs-toggle="button">Log in</button>
+        </form>
+    </div>
+{% endblock %}
