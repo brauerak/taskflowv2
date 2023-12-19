@@ -1,4 +1,21 @@
 * {
-    background-color: white;
+
     color: black;
+}
+
+.add_icon {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+}
+
+.bi {
+    cursor: pointer;
+    font-size: 50px;
+    padding: 1.5rem 2rem;
+    z-index: 1050;  
+    border-radius: 50%;
+    color: white;
+    font-weight: bold;
+    background-color: lightblue;
 }

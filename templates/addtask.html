@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %} Add Task {% endblock %}
+
+{% block main %}
+<div class="container-lg py-5 text-center w-50">
+  <form class="row gx-3 gy-2 align-items-center">
+    <div class="col-sm-3">
+      <label class="visually-hidden" for="specificSizeInputName">Title</label>
+      <input type="text" class="form-control" id="specificSizeInputName" placeholder="Title">
+    </div>
+    <div class="col-sm-3">
+      <label class="visually-hidden" for="specificSizeSelect">Category</label>
+      <select class="form-select" id="specificSizeSelect">
+        <option selected>Category</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </div>
+    <div class="col-sm-3">
+      <label class="visually-hidden" for="specificSizeSelect">Priority</label>
+      <select class="form-select" id="specificSizeSelect">
+        <option selected>Priority</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </div>
+    <div class="form-floating">
+      <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+      <label for="floatingTextarea2">Description (optional)</label>
+    </div>
+      
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
