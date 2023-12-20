@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, flash, redirect
+from flask import Flask, render_template, request, flash, redirect, session
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, Boolean, ForeignKey, Enum
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
@@ -61,6 +61,8 @@ def register():
         new_user = User(email=email, password=hashed_password, first_name=first_name, last_name=last_name)
         session.add(new_user)
         session.commit()
+
+        session["user_id"] = new_user.id
 
         return redirect("/")
 
