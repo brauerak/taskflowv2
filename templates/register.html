@@ -7,19 +7,43 @@
         <form action="/login" method="post">
             <div class="row mb-5">
                 <div class="col">
-                    <input type="text" class="form-control text-center" placeholder="First name" aria-label="First name">
+                    <input type="text" name="first_name" id="first_name" class="form-control text-center" placeholder="First name" aria-label="First name">
                 </div>
                 <div class="col">
-                    <input type="text" class="form-control text-center" placeholder="Last name" aria-label="Last name">
+                    <input type="text" name="last_name" id="last_name" class="form-control text-center" placeholder="Last name" aria-label="Last name">
                 </div>
             </div>
             <div class="mb-5">
-                <input type="email" class="form-control text-center" id="exampleInputEmail1" placeholder="Your email" aria-describedby="emailHelp">
+                <input type="email" name="email" id="email" class="form-control text-center"  placeholder="Your email" aria-describedby="emailHelp">
             </div>
             <div class="mb-5">
-                <input type="password" class="form-control text-center" placeholder="Password" id="exampleInputPassword1">
+                <input type="password" name="password" id="password" class="form-control text-center" placeholder="Password" >
             </div>
-            <button type="submit" class="btn" data-bs-toggle="button">Log in</button>
+            <div class="mb-5">
+                <input type="password" name="confirm_password" id="confirm_password" class="form-control text-center" placeholder="Confirm password" >
+            </div>
+            <button type="submit" class="btn" data-bs-toggle="button">Sign in</button>
         </form>
+        {% with messages = get_flashed_messages(category_filter=["form_error"]) %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-warning">{{ message }}</div>
+                {% endfor %}                        
+            {% endif %}
+        {% endwith %}
+        {% with messages = get_flashed_messages(category_filter=["confirm_password_error"]) %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-warning">{{ message }}</div>
+                {% endfor %}                        
+            {% endif %}
+        {% endwith %}
+        {% with messages = get_flashed_messages(category_filter=["user_exists"]) %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-warning">{{ message }}</div>
+                {% endfor %}                        
+            {% endif %}
+        {% endwith %}
     </div>
 {% endblock %}
