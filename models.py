@@ -29,7 +29,7 @@ class User(Base):
     email = Column(String)
     # I added (128) to get enough space for hashed password 
     password = Column(String(128))
-    firt_name = Column(String)
+    first_name = Column(String)
     last_name = Column(String)
     # datetime.utcnow allows me to automatically receive the account creation time 
     created_at = Column(DateTime, default=datetime.utcnow)
@@ -40,17 +40,10 @@ class Task(Base):
     __tablename__ = 'tasks'
     id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('users.id'))
-    category_id = Column(Integer, ForeignKey('category.id'))
     title = Column(String)
     description = Column(String, default='none')
+    category = Column(Enum(Categories))
     completed = Column(Boolean, default=False)
     priority = Column(Enum(PriorityLevel))
     created_at = Column(DateTime, default=datetime.utcnow)
     user = relationship("User", back_populates="tasks")
-    category = relationship("Category", back_populates='tasks')
-
-class Category(Base):
-    __tablename__ = 'category'
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-    tasks = relationship("Task", back_populates='category')
