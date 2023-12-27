@@ -2,18 +2,36 @@
 
 {% block title %} Log in {% endblock %}
 
+{% block login %} 
+<a class="btn" href="/register">Sign in</a>
+{% endblock %}
+
 {% block main %}
     <div class="container-sm py-5 text-center w-25">
         <form action="/login" method="post">
             <div class="mb-5">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <label for="exampleInputEmail1" class="form-label">Email</label>
+                <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp">
             </div>
             <div class="mb-5">
                 <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1">
+                <input type="password" class="form-control" name="password" id="password">
             </div>
-            <button type="submit" class="btn" data-bs-toggle="button">Log in</button>
+            <button type="submit" class="btn">Log in</button>
         </form>
+        {% with messages = get_flashed_messages(category_filter=["form_error"]) %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-warning">{{ message }}</div>
+                {% endfor %}                        
+            {% endif %}
+        {% endwith %}
+        {% with messages = get_flashed_messages(category_filter=["login_error"]) %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-warning">{{ message }}</div>
+                {% endfor %}                        
+            {% endif %}
+        {% endwith %}
     </div>
 {% endblock %}

@@ -2,74 +2,51 @@
 
 {% block title %} Home {% endblock %}
 
+{% block login %} 
+<a class="btn" href="/logout">Log out</a>
+{% endblock %}
+
 {% block main %}
 <div class="container-fluid mt-3">
-    <div class="row">
-      <div class="col-md-3 mb-3">
-        <div class="card bg-light">
-          <div class="card-body">
-            <h5 class="card-title">Davis Thorne and Partners</h5>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 mb-3">
-        <div class="card bg-warning">
-          <div class="card-body">
-            <h5 class="card-title">Brand & Marketing Central <br> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum laboriosam blanditiis nihil? Quos tempore, quam deserunt beatae eius neque? Delectus perspiciatis, repellendus cumque quo ratione vel aperiam harum quod laudantium.</h5>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 mb-3">
-        <div class="card bg-light">
-          <div class="card-body">
-            <h5 class="card-title">Events Calendar <br> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum laboriosam blanditiis nihil? Quos tempore, quam deserunt beatae eius neque? Delectus perspiciatis, repellendus cumque quo ratione vel aperiam harum quod laudantium.</h5>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3 mb-3">
-        <div class="card bg-danger">
-          <div class="card-body">
-            <h5 class="card-title">Global News <br> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum laboriosam blanditiis nihil? Quos tempore, quam deserunt beatae eius neque? Delectus perspiciatis, repellendus cumque quo ratione vel aperiam harum quod laudantium.</h5>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="row">
-      <div class="col-md-6 mb-3">
-        <div class="card bg-danger">
-          <div class="card-body">
-            <h5 class="card-title">KNOWLEDGE HUB <br> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum laboriosam blanditiis nihil? Quos tempore, quam deserunt beatae eius neque? Delectus perspiciatis, repellendus cumque quo ratione vel aperiam harum quod laudantium.</h5>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 mb-3">
-        <div class="card bg-secondary">
-          <div class="card-body">
-            <h5 class="card-title">Human Resources System <br> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum laboriosam blanditiis nihil? Quos tempore, quam deserunt beatae eius neque? Delectus perspiciatis, repellendus cumque quo ratione vel aperiam harum quod laudantium.</h5>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="row">
+  <!-- User Card -->
+  <div class="row justify-content-start mb-3">
       <div class="col-md-4 mb-3">
-        <div class="card bg-primary">
-          <div class="card-body">
-            <h5 class="card-title">Learning & Development Community <br> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum laboriosam blanditiis nihil? Quos tempore, quam deserunt beatae eius neque? Delectus perspiciatis, repellendus cumque quo ratione vel aperiam harum quod laudantium.</h5>
+          <div class="task-list">
+              <header class="task-list-header">
+                  {% if user_data %}
+                      {% for user in user_data %}
+                          <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+                      {% endfor %}
+                  {% endif %}
+              </header>
           </div>
-        </div>
       </div>
-      <div class="col-md-8 mb-3">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">People Directory <br> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorum laboriosam blanditiis nihil? Quos tempore, quam deserunt beatae eius neque? Delectus perspiciatis, repellendus cumque quo ratione vel aperiam harum quod laudantium.</h5>
-          </div>
-        </div>
-      </div>
+  </div>
+  <!-- Task Cards -->
+  <div class="row">
+        {% for category_name, tasks in tasks_by_category.items() %}
+            {% if tasks %}
+                <div class="col-md-4 mb-3">
+                    <div class="task-list">
+                        <header class="task-list-header">
+                            <h3>{{ category_name }}</h3>
+                        </header>
+                            {% for task in tasks %}
+                            <ul class="tasks">
+                                <li class="task">
+                                    <input type="checkbox" id="task-1">
+                                    <label for="task-1">{{ task.title }}</label>
+                                    <button class="edit-task-button">Edit</button>
+                                </li>
+                            {% endfor %}
+                            </ul>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
     </div>
-  </div>
-  <div class="add_icon">
-    <a class="bi bi-plus-lg" href="/addtask"></a>
-  </div>
-  {% endblock %} 
+</div>
+    <div class="add_icon">
+        <a class="bi bi-plus-lg" href="/addtask"></a>
+    </div>
+    {% endblock %} 

@@ -2,9 +2,13 @@
 
 {% block title %} Log in {% endblock %}
 
+{% block login %} 
+<a class="btn" href="/login">Log in</a>
+{% endblock %}
+
 {% block main %}
     <div class="container-sm py-5 text-center w-25">
-        <form action="/login" method="post">
+        <form action="/register" method="post">
             <div class="row mb-5">
                 <div class="col">
                     <input type="text" name="first_name" id="first_name" class="form-control text-center" placeholder="First name" aria-label="First name">
@@ -22,7 +26,7 @@
             <div class="mb-5">
                 <input type="password" name="confirm_password" id="confirm_password" class="form-control text-center" placeholder="Confirm password" >
             </div>
-            <button type="submit" class="btn" data-bs-toggle="button">Sign in</button>
+            <button type="submit" class="btn">Sign in</button>
         </form>
         {% with messages = get_flashed_messages(category_filter=["form_error"]) %}
             {% if messages %}
