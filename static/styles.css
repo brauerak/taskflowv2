@@ -9,15 +9,16 @@
     right: 50px;
 }
 
-.bi {
+.bi-plus-lg {
     cursor: pointer;
     font-size: 50px;
     padding: 1.5rem 2rem;
     z-index: 1050;  
     border-radius: 50%;
-    color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: black;
     font-weight: bold;
-    background-color: lightblue;
+    background-color: white;
 }
 
 .task-list {

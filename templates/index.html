@@ -1,52 +1,99 @@
 {% extends "layout.html" %}
+{% block title %}
+ Home 
+{% endblock %} 
 
-{% block title %} Home {% endblock %}
-
-{% block login %} 
+{% block login %}
 <a class="btn" href="/logout">Log out</a>
-{% endblock %}
+{% endblock %} 
 
 {% block main %}
 <div class="container-fluid mt-3">
   <!-- User Card -->
   <div class="row justify-content-start mb-3">
-      <div class="col-md-4 mb-3">
-          <div class="task-list">
-              <header class="task-list-header">
-                  {% if user_data %}
-                      {% for user in user_data %}
-                          <h3>{{ user.first_name }} {{ user.last_name }}</h3>
-                      {% endfor %}
-                  {% endif %}
-              </header>
-          </div>
+    <div class="col-md-4 mb-3">
+      <div class="task-list">
+        <header class="task-list-header text-center">
+          {% if user_data %}
+            {% for user in user_data %}
+                <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+            {% endfor %}
+          {% endif %}
+        </header>
       </div>
+    </div>
   </div>
   <!-- Task Cards -->
   <div class="row">
-        {% for category_name, tasks in tasks_by_category.items() %}
-            {% if tasks %}
-                <div class="col-md-4 mb-3">
-                    <div class="task-list">
-                        <header class="task-list-header">
-                            <h3>{{ category_name }}</h3>
-                        </header>
-                            {% for task in tasks %}
-                            <ul class="tasks">
-                                <li class="task">
-                                    <input type="checkbox" id="task-1">
-                                    <label for="task-1">{{ task.title }}</label>
-                                    <button class="edit-task-button">Edit</button>
-                                </li>
-                            {% endfor %}
-                            </ul>
+    {% for category_name, tasks in tasks_by_category.items() %} 
+        {% if tasks %}
+        <div class="col-md-4 mb-3">
+        <div class="task-list">
+            <header class="task-list-header">
+            <h3>{{ category_name }}</h3>
+            </header>
+            {% for task in tasks %}
+            <ul class="tasks">
+            <li class="task">
+                <!-- adding task.id in every id will help me to avoid bugs in modals-->
+                <input type="checkbox" id="task-{{ task.id }}" />
+                <label for="task-{{ task.id }}">{{ task.title }}</label>
+                <!-- Expand start -->
+                <button
+                type="button"
+                class="btn"
+                data-bs-toggle="modal"
+                data-bs-target="#taskModal-{{ task.id }}"
+                >
+                ...
+                </button>
+                <!-- Expand modal -->
+                <div
+                class="modal fade"
+                id="taskModal-{{ task.id }}"
+                tabindex="-1"
+                aria-labelledby="taskModalLabel-{{ task.id }}"
+                aria-hidden="true"
+                >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="taskModalLabel-{{ task.id }}">
+                        {{ task.title }}
+                        </h1>
+                        <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">{{ task.description }}</div>
+                    <div class="modal-footer">
+                        <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                        >
+                        Close
+                        </button>
+                    </div>
                     </div>
                 </div>
-            {% endif %}
-        {% endfor %}
-    </div>
+                </div>
+                <!-- Expand end-->
+                <!-- Delete start-->
+                <i class="bi bi-trash3"></i>
+            </li>
+            {% endfor %}
+            </ul>
+        </div>
+        </div>
+        {% endif %} 
+    {% endfor %}
+  </div>
 </div>
-    <div class="add_icon">
-        <a class="bi bi-plus-lg" href="/addtask"></a>
-    </div>
-    {% endblock %} 
+<div class="add_icon">
+  <a class="bi bi-plus-lg" href="/addtask"></a>
+</div>
+{% endblock %}
