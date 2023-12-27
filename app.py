@@ -22,7 +22,7 @@ Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 db_session = Session()
 
-  
+     
 @app.route("/")
 @login_required
 def index():
@@ -67,13 +67,13 @@ def login():
         else:
             session["user_id"] = user.id
             return redirect("/")
-
+   
 @app.route("/logout")
 def logout():
     # forget any user_id
     session.clear()
     return redirect("/")
-        
+          
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "GET":
@@ -92,20 +92,20 @@ def register():
             flash("Passwords are not the same", "confirm_password_error")
         
         hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
-
+  
         # query database for email
         user = db_session.query(User).filter_by(email=email).first()
         # if user exists
         if user is not None:
             flash("This user already exists. Please log in", "user_exists")
-        
+          
         #if user not exists yet
         new_user = User(email=email, password=hashed_password, first_name=first_name, last_name=last_name)
         db_session.add(new_user)
         db_session.commit()
 
         session["user_id"] = new_user.id
-
+ 
         return redirect("/")
  
 @app.route("/addtask", methods=["GET", "POST"])
@@ -140,3 +140,4 @@ def addtask():
 
         flash(f"Your task was added successfully", "task_success")
         return redirect("/")
+ 
