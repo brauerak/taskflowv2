@@ -19,3 +19,60 @@
     font-weight: bold;
     background-color: lightblue;
 }
+
+.task-list {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 400px; /* Możesz dostosować szerokość do swoich potrzeb */
+    margin: auto;
+}
+
+.task-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+h2 {
+    margin: 0;
+}
+
+.add-task-button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.tasks {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.task {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* Odległość między zadaniami */
+}
+
+.task input[type="checkbox"] {
+    margin-right: 10px; /* Odległość checkboxa od tekstu */
+}
+
+.task label {
+    flex-grow: 1;
+}
+
+.edit-task-button {
+    background: none;
+    border: none;
+    color: #007bff; /* Kolor przycisku edycji */
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+/* Możesz dodać dodatkowe style dla efektów hover i focus */
