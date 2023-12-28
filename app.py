@@ -21,8 +21,8 @@ Base.metadata.create_all(engine)
 # creating a 'session' allows me to manage databes operations
 Session = sessionmaker(bind=engine)
 db_session = Session()
-
-     
+ 
+      
 @app.route("/")
 @login_required
 def index():
@@ -140,4 +140,34 @@ def addtask():
 
         flash(f"Your task was added successfully", "task_success")
         return redirect("/")
- 
+
+
+@app.route("/toogle_task/<int:task_id>", methods=["POST"])
+@login_required
+def toggle_task(task_id):
+
+    task = db_session.query(Task).get(task_id)
+
+    if task:
+        task.completed = not task.completed
+        db_session.commit()
+        flash("Task status updated!", "done_success")
+
+    else:
+        flash("Task not found.", "done_error")
+    
+    return redirect("/")
+    
+@app.route("/delete/<int:task_id>", methods=["POST"])
+@login_required
+def delete(task_id):
+
+    task = db_session.query(Task).get(task_id)
+
+    if task:
+        db_session.delete(task)
+        db_session.commit()
+    else:
+        flash("Task not found", "done_error")
+    return redirect("/")
+             
