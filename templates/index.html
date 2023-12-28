@@ -32,12 +32,14 @@
             <header class="task-list-header">
             <h3>{{ category_name }}</h3>
             </header>
-            {% for task in tasks %}
             <ul class="tasks">
-            <li class="task">
+                {% for task in tasks %}
+                <li class="task">
                 <!-- adding task.id in every id will help me to avoid bugs in modals-->
-                <input type="checkbox" id="task-{{ task.id }}" />
-                <label for="task-{{ task.id }}">{{ task.title }}</label>
+                <form class="form-check form-switch" action="{{ url_for('toggle_task', task_id=task.id) }}" method="post">
+                    <input class="form-check-input" type="checkbox" role="switch" id="task-{{ task.id }}" onchange="this.form.submit()"{{ 'checked' if task.completed}}/>
+                    <label class="form-check-label {{ 'task-completed' if task.completed }}" for="task-{{ task.id }}">{{ task.title }}</label>
+                </form>
                 <!-- Expand start -->
                 <button
                 type="button"
@@ -61,15 +63,17 @@
                         <h1 class="modal-title fs-5" id="taskModalLabel-{{ task.id }}">
                         {{ task.title }}
                         </h1>
-                        <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                        ></button>
                     </div>
                     <div class="modal-body">{{ task.description }}</div>
-                    <div class="modal-footer">
+                    <form class="modal-footer" action="{{ url_for('delete', task_id=task.id) }}" method="post">
+                        <button
+                        type="submit"
+                        id="task-{{ task.id }}"
+                        class="btn btn-secondary bi bi-trash3"
+                        data-bs-dismiss="modal"
+                        onclick="this.form.submit()"
+                        >
+                        </button>
                         <button
                         type="button"
                         class="btn btn-secondary"
@@ -77,13 +81,12 @@
                         >
                         Close
                         </button>
-                    </div>
-                    </div>
+                    </form>
+                </div>
                 </div>
                 </div>
                 <!-- Expand end-->
                 <!-- Delete start-->
-                <i class="bi bi-trash3"></i>
             </li>
             {% endfor %}
             </ul>
@@ -97,3 +100,17 @@
   <a class="bi bi-plus-lg" href="/addtask"></a>
 </div>
 {% endblock %}
+{% with messages = get_flashed_messages(category_filter=["done_success"]) %}
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-warning">{{ message }}</div>
+      {% endfor %}                        
+    {% endif %}
+  {% endwith %}
+  {% with messages = get_flashed_messages(category_filter=["done_error"]) %}
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-warning">{{ message }}</div>
+      {% endfor %}                        
+    {% endif %}
+  {% endwith %}
