@@ -57,7 +57,13 @@ h2 {
 .task {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     margin-bottom: 10px; /* Odległość między zadaniami */
+}
+
+.task-completed {
+    text-decoration: line-through;
+    color: #808080;
 }
 
 .task input[type="checkbox"] {
