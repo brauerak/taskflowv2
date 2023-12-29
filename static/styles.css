@@ -35,6 +35,10 @@ nav {
     text-decoration: none;
 }
 
+.form-control {
+    width: 50%;
+}
+
 .task-list {
     background: #fafafa;
     border-radius: 8px;
@@ -100,3 +104,27 @@ h2 {
     background-color: #fff; /* Biały kolor suwaka */
   }
 
+
+  @media (max-width: 768px) {
+    .container-sm {
+        width: 90% !important; 
+        padding: 10px; 
+    }
+
+    .form-label {
+        font-size: 14px;
+
+    }
+    .form-control {
+        font-size: 14px;
+        width: 75%;
+    }
+    .btn {
+        padding: 10px 20px; 
+        font-size: 16px; 
+    }
+
+    .alert {
+        font-size: 14px; 
+    }
+}
