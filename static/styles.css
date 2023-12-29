@@ -3,6 +3,15 @@
     color: black;
 }
 
+
+main footer {
+    background-color: #fbfbfb
+}
+
+nav {
+    background-color: #fafafa;
+}
+
 .add_icon {
     position: fixed;
     bottom: 50px;
@@ -11,22 +20,27 @@
 
 .bi-plus-lg {
     cursor: pointer;
-    font-size: 50px;
+    font-size: 40px;
     padding: 0.75rem 1.25rem;
     z-index: 1050;  
     border-radius: 50%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    color: black;
+    color: white;
     font-weight: bold;
-    background-color: white;
+    background-color: steelblue;
+}
+
+.bi-github {
+    color: black;
+    text-decoration: none;
 }
 
 .task-list {
-    background: white;
+    background: #fafafa;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    max-width: 400px; /* Możesz dostosować szerokość do swoich potrzeb */
+    max-width: 400px;
     margin: auto;
 }
 
@@ -74,12 +88,15 @@ h2 {
     flex-grow: 1;
 }
 
-.edit-task-button {
-    background: none;
-    border: none;
-    color: #007bff; /* Kolor przycisku edycji */
-    cursor: pointer;
-    margin-left: 10px;
-}
 
-/* Możesz dodać dodatkowe style dla efektów hover i focus */
+/* Kolor tła dla zaznaczonego switcha */
+.form-switch .form-check-input:checked {
+    background-color: steelblue;
+    border-color: steelblue;
+  }
+  
+  /* Kolor suwaka dla zaznaczonego switcha */
+  .form-check-input + .form-check-label::before {
+    background-color: #fff; /* Biały kolor suwaka */
+  }
+

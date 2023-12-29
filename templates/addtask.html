@@ -7,34 +7,36 @@
   <form action="/addtask" class="row gx-3 gy-2 align-items-center" method="post">
     <div class="col-sm-3">
       <label class="visually-hidden" for="title">Title</label>
-      <input type="text" class="form-control" id="title" name="title" placeholder="Title">
+      <input required type="text" class="form-control" id="title" name="title" placeholder="Title">
     </div>
     <div class="col-sm-3">
       <label class="visually-hidden" for="category">Category</label>
-      <select class="form-select" id="category" name="category">
+      <select required class="form-select text-muted" id="category" name="category">
         <option disabled selected value="">Category</option>
         {% for cat_name, cat_value in categories %}
-        <option value="{{ cat_name }}">{{ cat_value }}</option>
+        <option class="text-muted" value="{{ cat_name }}">{{ cat_value }}</option>
         {% endfor %}
       </select>
     </div>
     <div class="col-sm-3">
       <label class="visually-hidden" for="priority">Priority</label>
-      <select class="form-select" id="priority" name="priority">
+      <select required class="form-select text-muted" id="priority" name="priority">
         <option disabled selected value="">Priority</option>
         {% for prio_name, prio_value in priority %}
-        <option value="{{ prio_name }}">{{ prio_value }}</option>
+        <option class="text-muted" value="{{ prio_name }}">{{ prio_value }}</option>
         {% endfor %}
       </select>
     </div>
     <div class="form-floating">
       <textarea class="form-control" placeholder="Leave a comment here" id="description" name="description" style="height: 100px"></textarea>
-      <label for="floatingTextarea2">Description (optional)</label>
+      <label class="text-muted" for="floatingTextarea2">Description (optional)</label>
     </div>  
     <div class="col-auto">
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary" style="background-color: steelblue;">Add Task</button>
     </div>
   </form>
+  <br>
+  <br>
   {% with messages = get_flashed_messages(category_filter=["form_error"]) %}
     {% if messages %}
       {% for message in messages %}
