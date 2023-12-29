@@ -1,52 +1,120 @@
 {% extends "layout.html" %}
+{% block title %}
+ Home 
+{% endblock %} 
 
-{% block title %} Home {% endblock %}
-
-{% block login %} 
-<a class="btn" href="/logout">Log out</a>
-{% endblock %}
+{% block login %}
+<a class="btn" style="background-color: steelblue; color: white;" href="/logout">Log out</a>
+{% endblock %} 
 
 {% block main %}
 <div class="container-fluid mt-3">
   <!-- User Card -->
   <div class="row justify-content-start mb-3">
-      <div class="col-md-4 mb-3">
-          <div class="task-list">
-              <header class="task-list-header">
-                  {% if user_data %}
-                      {% for user in user_data %}
-                          <h3>{{ user.first_name }} {{ user.last_name }}</h3>
-                      {% endfor %}
-                  {% endif %}
-              </header>
-          </div>
+    <div class="col-md-4 mb-3">
+      <div class="task-list">
+        <header class="task-list-header text-center text-muted">
+          {% if user_data %}
+            {% for user in user_data %}
+                <h3>{{ user.first_name }} {{ user.last_name }}</h3>
+            {% endfor %}
+          {% endif %}
+        </header>
       </div>
+    </div>
   </div>
   <!-- Task Cards -->
   <div class="row">
-        {% for category_name, tasks in tasks_by_category.items() %}
-            {% if tasks %}
-                <div class="col-md-4 mb-3">
-                    <div class="task-list">
-                        <header class="task-list-header">
-                            <h3>{{ category_name }}</h3>
-                        </header>
-                            {% for task in tasks %}
-                            <ul class="tasks">
-                                <li class="task">
-                                    <input type="checkbox" id="task-1">
-                                    <label for="task-1">{{ task.title }}</label>
-                                    <button class="edit-task-button">Edit</button>
-                                </li>
-                            {% endfor %}
-                            </ul>
+    {% for category_name, tasks in tasks_by_category.items() %} 
+        {% if tasks %}
+        <div class="col-md-4 mb-3">
+        <div class="task-list">
+            <header class="task-list-header text-muted">
+            <h3>{{ category_name }}</h3>
+            </header>
+            <ul class="tasks">
+                {% for task in tasks %}
+                <li class="task">
+                <!-- adding task.id in every id will help me to avoid bugs in modals-->
+                <form class="form-check form-switch" action="{{ url_for('toggle_task', task_id=task.id) }}" method="post">
+                    <input class="form-check-input" type="checkbox" role="switch" id="task-{{ task.id }}" onchange="this.form.submit()"{{ 'checked' if task.completed}}>
+                    <label class="form-check-label {{ 'task-completed' if task.completed }} text-muted" for="task-{{ task.id }}">{{ task.title }}</label>
+                </form>
+                <!-- Expand start -->
+                <button
+                type="button"
+                class="btn"
+                data-bs-toggle="modal"
+                data-bs-target="#taskModal-{{ task.id }}"
+                >
+                ...
+                </button>
+                <!-- Expand modal -->
+                <div
+                class="modal fade"
+                id="taskModal-{{ task.id }}"
+                tabindex="-1"
+                aria-labelledby="taskModalLabel-{{ task.id }}"
+                aria-hidden="true"
+                >
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5 text-muted" id="taskModalLabel-{{ task.id }}">
+                        {{ task.title }}
+                        </h1>
                     </div>
+                    <div class="modal-body text-muted">{{ task.description }}</div>
+                    <form class="modal-footer" action="{{ url_for('delete', task_id=task.id) }}" method="post">
+                        <button
+                        type="submit"
+                        id="task-{{ task.id }}"
+                        class="btn btn-secondary bi bi-trash3"
+                        data-bs-dismiss="modal"
+                        onclick="this.form.submit()"
+                        style="background-color: steelblue;"
+                        >
+                        </button>
+                        <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                        style="background-color: steelblue;"
+                        >
+                        Close
+                        </button>
+                    </form>
                 </div>
-            {% endif %}
-        {% endfor %}
-    </div>
+                </div>
+                </div>
+                <!-- Expand end-->
+                <!-- Delete start-->
+            </li>
+            {% endfor %}
+            </ul>
+        </div>
+        </div>
+        {% endif %} 
+    {% endfor %}
+  </div>
 </div>
-    <div class="add_icon">
-        <a class="bi bi-plus-lg" href="/addtask"></a>
-    </div>
-    {% endblock %} 
+<div class="add_icon">
+  <a class="bi bi-plus-lg" href="/addtask"></a>
+</div>
+{% endblock %}
+<br>
+<br>
+{% with messages = get_flashed_messages(category_filter=["done_success"]) %}
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-warning">{{ message }}</div>
+      {% endfor %}                        
+    {% endif %}
+  {% endwith %}
+  {% with messages = get_flashed_messages(category_filter=["done_error"]) %}
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-warning">{{ message }}</div>
+      {% endfor %}                        
+    {% endif %}
+  {% endwith %}

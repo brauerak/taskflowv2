@@ -3,7 +3,7 @@
 {% block title %} Log in {% endblock %}
 
 {% block login %} 
-<a class="btn" href="/login">Log in</a>
+<a class="btn" href="/login" style="background-color: steelblue; color: white;">Log in</a>
 {% endblock %}
 
 {% block main %}
@@ -11,23 +11,25 @@
         <form action="/register" method="post">
             <div class="row mb-5">
                 <div class="col">
-                    <input type="text" name="first_name" id="first_name" class="form-control text-center" placeholder="First name" aria-label="First name">
+                    <input required type="text" name="first_name" id="first_name" class="form-control text-center" placeholder="First name" aria-label="First name">
                 </div>
                 <div class="col">
-                    <input type="text" name="last_name" id="last_name" class="form-control text-center" placeholder="Last name" aria-label="Last name">
+                    <input required type="text" name="last_name" id="last_name" class="form-control text-center" placeholder="Last name" aria-label="Last name">
                 </div>
             </div>
             <div class="mb-5">
-                <input type="email" name="email" id="email" class="form-control text-center"  placeholder="Your email" aria-describedby="emailHelp">
+                <input required type="email" name="email" id="email" class="form-control text-center"  placeholder="Your email" aria-describedby="emailHelp">
             </div>
             <div class="mb-5">
-                <input type="password" name="password" id="password" class="form-control text-center" placeholder="Password" >
+                <input required type="password" name="password" id="password" class="form-control text-center" placeholder="Password" >
             </div>
             <div class="mb-5">
-                <input type="password" name="confirm_password" id="confirm_password" class="form-control text-center" placeholder="Confirm password" >
+                <input required type="password" name="confirm_password" id="confirm_password" class="form-control text-center" placeholder="Confirm password" >
             </div>
-            <button type="submit" class="btn">Sign in</button>
+            <button type="submit" class="btn" style="background-color: steelblue; color: white;">Sign in</button>
         </form>
+        <br>
+        <br>
         {% with messages = get_flashed_messages(category_filter=["form_error"]) %}
             {% if messages %}
                 {% for message in messages %}

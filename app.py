@@ -21,8 +21,8 @@ Base.metadata.create_all(engine)
 # creating a 'session' allows me to manage databes operations
 Session = sessionmaker(bind=engine)
 db_session = Session()
-
-  
+ 
+      
 @app.route("/")
 @login_required
 def index():
@@ -30,7 +30,7 @@ def index():
 
         user_id = session["user_id"]
         user_data = db_session.query(User).filter_by(id=user_id).all()
-        tasks = db_session.query(Task).filter_by(user_id=user_id).all()
+        tasks = db_session.query(Task).filter_by(user_id=user_id).order_by( Task.category, Task.completed).all()
 
         tasks_by_category = defaultdict(list)
         for task in tasks:
@@ -38,7 +38,7 @@ def index():
 
         return render_template("index.html", user_data=user_data, tasks_by_category=tasks_by_category)
     else:
-        return render_template("index.html")
+        return redirect("login.html")
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -51,6 +51,7 @@ def login():
 
         if not request.form.get("email") or not request.form.get("password"):
             flash("Complete the required fields.", "form_error")
+            return render_template("login.html")
         
         email = request.form.get("email")
 
@@ -67,13 +68,13 @@ def login():
         else:
             session["user_id"] = user.id
             return redirect("/")
-
+   
 @app.route("/logout")
 def logout():
     # forget any user_id
     session.clear()
     return redirect("/")
-        
+          
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "GET":
@@ -81,6 +82,7 @@ def register():
     else:
         if not request.form.get("first_name") or not request.form.get("last_name") or not request.form.get("email") or not request.form.get("password") or not request.form.get("confirm_password") :
             flash("Complete the required fields.", "form_error")
+            return render_template("register.html")
         
         first_name = request.form.get("first_name")
         last_name = request.form.get("last_name")
@@ -90,22 +92,25 @@ def register():
         
         if password != confirm_password:
             flash("Passwords are not the same", "confirm_password_error")
-        
-        hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
+            return render_template("register.html")
 
+        hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
+  
         # query database for email
         user = db_session.query(User).filter_by(email=email).first()
         # if user exists
         if user is not None:
             flash("This user already exists. Please log in", "user_exists")
-        
+            return render_template("register.html")
+
+          
         #if user not exists yet
         new_user = User(email=email, password=hashed_password, first_name=first_name, last_name=last_name)
         db_session.add(new_user)
         db_session.commit()
 
         session["user_id"] = new_user.id
-
+ 
         return redirect("/")
  
 @app.route("/addtask", methods=["GET", "POST"])
@@ -140,3 +145,34 @@ def addtask():
 
         flash(f"Your task was added successfully", "task_success")
         return redirect("/")
+
+
+@app.route("/toogle_task/<int:task_id>", methods=["POST"])
+@login_required
+def toggle_task(task_id):
+
+    task = db_session.query(Task).get(task_id)
+
+    if task:
+        task.completed = not task.completed
+        db_session.commit()
+        flash("Task status updated!", "done_success")
+
+    else:
+        flash("Task not found.", "done_error")
+    
+    return redirect("/")
+    
+@app.route("/delete/<int:task_id>", methods=["POST"])
+@login_required
+def delete(task_id):
+
+    task = db_session.query(Task).get(task_id)
+
+    if task:
+        db_session.delete(task)
+        db_session.commit()
+    else:
+        flash("Task not found", "done_error")
+    return redirect("/")
+             
