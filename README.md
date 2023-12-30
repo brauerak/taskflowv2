@@ -1,7 +1,7 @@
 # TASKFLOW - TASK MANAGER APP
-#### Video Demo:  <URL HERE>
+#### Video Demo:  https://youtu.be/IT4IcTNnrL4
 #### Description:
-TaskFlow is a web-based "todo" application that allows users to manage their daily tasks efficiently. The application features user registration and login, adding, editing, and deleting tasks, as well as sorting them by category.
+TaskFlow is a web-based "todo" application that allows users to manage their daily tasks efficiently. The application features user registration and login, adding and deleting tasks, as well as sorting them by category.
 
 Project Structure
 The project consists of the following files:
