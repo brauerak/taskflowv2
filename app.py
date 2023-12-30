@@ -61,7 +61,7 @@ def login():
         # check if user exists
         #? if user exists and password is correct
         if user is None:
-            flash("User doesn't exist. Please sign in.", "user_error")
+            flash("User does not exist. Please sign in.", "user_error")
             return render_template("login.html")
         else:
             password = user.password
@@ -160,11 +160,12 @@ def toggle_task(task_id):
         task.completed = not task.completed
         db_session.commit()
         flash("Task status updated!", "done_success")
+        return redirect("/")
 
     else:
         flash("Task not found.", "done_error")
+        return redirect("/")
     
-    return redirect("/")
     
 @app.route("/delete/<int:task_id>", methods=["POST"])
 @login_required
