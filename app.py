@@ -58,16 +58,19 @@ def login():
         # query database for email
         user = db_session.query(User).filter_by(email=email).first()
 
-        password = user.password
-        
         # check if user exists
         #? if user exists and password is correct
-        if user is None or not check_password_hash(password, request.form.get("password")):
-            flash("Email or password is not correct", "login_error")
+        if user is None:
+            flash("User doesn't exist. Please sign in.", "user_error")
             return render_template("login.html")
         else:
-            session["user_id"] = user.id
-            return redirect("/")
+            password = user.password
+            if not check_password_hash(password, request.form.get("password")):
+                flash("Email or password is not correct. Please try again", "login_error")
+                return render_template("login.html")
+            else:
+                session["user_id"] = user.id
+                return redirect("/")
    
 @app.route("/logout")
 def logout():
