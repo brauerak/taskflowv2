@@ -8,13 +8,17 @@
 
 {% block main %}
     <div class="container-lg py-5 text-center w-50">
+        <p class="navbar-brand" style="color: steelblue; font-size: 50px;">TaskFlow</p>
+        <p class="text-muted" style="font-size: 25px;">Your Task Manager App</p>
+    </div>
+    <div class="container-lg py-5 text-center w-50">
         <form action="/login" method="post">
             <div class="mb-5">
-                <label for="exampleInputEmail1" class="form-label">Email</label>
+                <label for="exampleInputEmail1" class="form-label text-muted">Email</label>
                 <input required type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp">
             </div>
             <div class="mb-5">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <label for="exampleInputPassword1" class="form-label text-muted">Password</label>
                 <input required type="password" class="form-control" name="password" id="password">
             </div>
             <button type="submit" class="btn" style="background-color: steelblue; color: white;">Log in</button>

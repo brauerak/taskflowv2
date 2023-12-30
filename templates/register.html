@@ -1,12 +1,16 @@
 {% extends "layout.html" %}
 
-{% block title %} Log in {% endblock %}
+{% block title %} Register{% endblock %}
 
 {% block login %} 
 <a class="btn" href="/login" style="background-color: steelblue; color: white;">Log in</a>
 {% endblock %}
 
 {% block main %}
+    <div class="container-lg py-5 text-center w-50">
+        <p class="navbar-brand" style="color: steelblue; font-size: 50px;">TaskFlow</p>
+        <p class="text-muted" style="font-size: 25px;">Your Task Manager App</p>
+    </div>
     <div class="container-sm py-5 text-center w-50">
         <form action="/register" method="post">
             <div class="row mb-5">
