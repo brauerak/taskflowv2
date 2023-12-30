@@ -159,13 +159,10 @@ def toggle_task(task_id):
     if task:
         task.completed = not task.completed
         db_session.commit()
-        flash("Task status updated!", "done_success")
-        return redirect("/")
-
     else:
         flash("Task not found.", "done_error")
-        return redirect("/")
     
+    return redirect("/")
     
 @app.route("/delete/<int:task_id>", methods=["POST"])
 @login_required
